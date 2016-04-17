@@ -8,8 +8,8 @@ from IPython.html.nbextensions import install_nbextension
 from IPython.html.services.config import ConfigManager
 
 HERE = os.path.abspath(os.path.dirname(__file__))
-EXT_DIR = os.path.join(HERE, 'nbexamples', 'static')
-SERVER_EXT_CONFIG = "c.NotebookApp.server_extensions.append('nbexamples.handlers')"
+EXT_DIR = os.path.join(HERE, 'nbshared', 'static')
+SERVER_EXT_CONFIG = "c.NotebookApp.server_extensions.append('nbshared.handlers')"
 
 class InstallCommand(install):
     def run(self):
@@ -38,22 +38,17 @@ def _install_server_extension():
 
 
 def _install_js():
-    install_nbextension(EXT_DIR, destination='nbexamples',
+    install_nbextension(EXT_DIR, destination='nbshared',
                         overwrite=True, user=True, verbose=2)
     cm = ConfigManager()
     print('Enabling extension for notebook')
     cm.update("notebook", {"load_extensions":
-                           {"nbexamples/submit-example-button": True}})
-    cm.update("tree", {"load_extensions": {"nbexamples/main": True}})
-
+                           {"nbshared/submit-shared-button": True}})
+    cm.update("tree", {"load_extensions": {"nbshared/main": True}})
 
 setup(
-    name='nbexamples',
+    name='nbshared',
     version='0.1',
-    packages=['nbexamples'],
-    cmdclass={
-        'install': InstallCommand,
-        'develop': InstallCommand
-    },
+    packages=['nbshared'],
     include_package_data=True
 )

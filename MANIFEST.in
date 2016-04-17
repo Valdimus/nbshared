@@ -1,1 +1,1 @@
-recursive-include nbexamples/static *
+recursive-include nbshared/static *
